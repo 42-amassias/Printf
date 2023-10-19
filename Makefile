@@ -26,9 +26,11 @@ FILES			=						\
 SRCS			=	$(addsuffix .c,$(addprefix $(SRC_DIR)/,$(FILES)))
 OBJS			=	$(addsuffix .o,$(addprefix $(SRC_DIR)/,$(FILES)))
 
-.PHONY: all clean fclean re
+.PHONY: all bonus clean fclean re
 
 all: $(NAME)
+
+bonus: all
 
 clean:
 	rm -f $(OBJS)
