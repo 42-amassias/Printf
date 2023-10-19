@@ -6,7 +6,7 @@
 /*   By: amassias <amassias@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 06:36:08 by amassias          #+#    #+#             */
-/*   Updated: 2023/10/19 07:49:55 by amassias         ###   ########.fr       */
+/*   Updated: 2023/10/19 23:03:20 by amassias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ int	__hex_printer(t_format *fmt, size_t n, int u)
 	int	size;
 
 	size = len(n);
+	if (n == 0)
+		fmt->flags &= ~FMT_FLAG__HEX_PREFIX;
 	if (FMT__HEX_PREFIX(*fmt))
 		size += 2;
 	if (FMT__FORCE_SIGN(*fmt) || FMT__ALIGN_SIGN(*fmt))

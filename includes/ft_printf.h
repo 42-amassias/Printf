@@ -6,7 +6,7 @@
 /*   By: amassias <amassias@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 07:49:30 by amassias          #+#    #+#             */
-/*   Updated: 2023/10/19 08:37:28 by amassias         ###   ########.fr       */
+/*   Updated: 2023/10/19 23:03:25 by amassias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 typedef struct s_format {
 	char	flags;
 	int		width;
+	int		precision;
 	char	specifier;
 }	t_format;
 
