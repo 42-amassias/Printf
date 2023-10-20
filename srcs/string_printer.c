@@ -1,29 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   _char_printer.c                                    :+:      :+:    :+:   */
+/*   string_printer.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amassias <amassias@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/19 02:55:50 by amassias          #+#    #+#             */
-/*   Updated: 2023/10/20 04:17:06 by amassias         ###   ########.fr       */
+/*   Created: 2023/10/20 04:15:03 by amassias          #+#    #+#             */
+/*   Updated: 2023/10/20 04:18:48 by amassias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 
-int	_char_printer(va_list *list, t_format *fmt)
+static void	putnstr(const char *str, size_t len)
 {
-	int	len;
+	while (len--)
+		ft_putchar_fd(*str++, 1);
+}
 
-	if (fmt->width <= 0)
-		fmt->width = 1;
-	len = fmt->width--;
+int	__print_string(t_format *fmt, char *str)
+{
+	size_t	slen;
+	size_t	len;
+
+	slen = ft_strlen(str);
+	if (FMT__PRECISION(*fmt))
+		slen = min(fmt->precision, slen);
+	fmt->width = max(0, fmt->width - slen);
+	len = slen + fmt->width;
 	if (FMT__LEFT_JUSTIFY(*fmt))
-		ft_putchar_fd(va_arg(*list, int), 1);
-	while (fmt->width--)
+		putnstr(str, slen);
+	while (fmt->width-- > 0)
 		ft_putchar_fd(' ', 1);
 	if (!FMT__LEFT_JUSTIFY(*fmt))
-		ft_putchar_fd(va_arg(*list, int), 1);
+		putnstr(str, slen);
 	return (len);
 }

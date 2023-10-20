@@ -1,5 +1,5 @@
 CC				=	cc
-CFLAGS			=	-Wall -Werror -Wextra
+CFLAGS			=	-Wall -Werror -Wextra -g
 
 LIB_FT_PATH		=	libft
 LIB_FT_INC_DIR	=	$(LIB_FT_PATH)
@@ -13,7 +13,9 @@ NAME			=	libftprintf.a
 FILES			=						\
 					ft_printf			\
 					utils				\
-					_hex_printer		\
+					number_printer		\
+					hex_printer			\
+					string_printer		\
 					_char_printer		\
 					_string_printer		\
 					_pointer_printer	\

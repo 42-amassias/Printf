@@ -6,13 +6,11 @@
 /*   By: amassias <amassias@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 08:09:45 by amassias          #+#    #+#             */
-/*   Updated: 2023/10/20 00:07:14 by amassias         ###   ########.fr       */
+/*   Updated: 2023/10/20 04:18:27 by amassias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
-
-#include <stdio.h>
+#include "utils.h"
 
 #define SPECIFIERS "cspdiuxX%"
 #define FLAGS "-+ #0"
@@ -27,18 +25,22 @@ t_type_printer	g_printers[] = {
 
 void	read_number(const char **str, int *value_ptr)
 {
-	while (ft_isdigit(**str))
+	int	x;
+
+	x = 0;
+	while (**str && ft_isdigit(**str))
 	{
-		*value_ptr = 10 * *value_ptr + **str - '0';
+		x = 10 * x + **str - '0';
 		++(*str);
 	}
+	*value_ptr = x;
 }
 
 int	read_format(t_format *fmt, const char **fmt_ptr)
 {
 	char	*x;
 
-	ft_bzero(fmt, sizeof(fmt));
+	ft_bzero(fmt, sizeof(t_format));
 	while (1)
 	{
 		x = ft_strchr(FLAGS, *(*fmt_ptr));
@@ -48,15 +50,15 @@ int	read_format(t_format *fmt, const char **fmt_ptr)
 		*((char *)&fmt->flags) |= 1 << (x - FLAGS);
 	}
 	read_number(fmt_ptr, &fmt->width);
-	if (**fmt_ptr == '.')
+	if (**fmt_ptr && **fmt_ptr == '.')
 	{
 		++(*fmt_ptr);
 		read_number(fmt_ptr, &fmt->precision);
+		fmt->flags |= FMT_FLAG__PRECISION;
 	}
 	x = ft_strchr(SPECIFIERS, **fmt_ptr);
-	if (!x)
+	if (!*(*fmt_ptr)++ || !x)
 		return (1);
-	++(*fmt_ptr);
 	fmt->specifier = *x;
 	return (0);
 }

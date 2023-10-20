@@ -1,21 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   _hex_printer.c                                     :+:      :+:    :+:   */
+/*   hex_printer.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amassias <amassias@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 06:36:08 by amassias          #+#    #+#             */
-/*   Updated: 2023/10/19 23:03:20 by amassias         ###   ########.fr       */
+/*   Updated: 2023/10/20 04:18:36 by amassias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "utils.h"
 
-#include "libft.h"
-
-#define U_CHARSET "0123456789ABCDEFX"
-#define L_CHARSET "0123456789abcdefx"
+#define U_CHARSET "0123456789ABCDEF0X"
+#define L_CHARSET "0123456789abcdef0x"
 
 static int	len(size_t n)
 {
@@ -51,12 +49,8 @@ static void	print(t_format *fmt, size_t n, int u)
 	if (FMT__FORCE_SIGN(*fmt))
 		ft_putchar_fd('+', 1);
 	if (FMT__HEX_PREFIX(*fmt))
-	{
-		ft_putchar_fd('0', 1);
-		ft_putchar_fd(charset[sizeof(L_CHARSET) - 2], 1);
-	}
-	if (!FMT__LEFT_JUSTIFY(*fmt) && FMT__ZERO_PADDING(*fmt))
-		padd('0', fmt->width);
+		ft_putstr_fd(&charset[sizeof(L_CHARSET) - 3], 1);
+	padd('0', fmt->precision);
 	print_hex(charset, n);
 	if (FMT__LEFT_JUSTIFY(*fmt))
 		padd(' ', fmt->width);
@@ -64,19 +58,21 @@ static void	print(t_format *fmt, size_t n, int u)
 
 int	__hex_printer(t_format *fmt, size_t n, int u)
 {
-	int	size;
+	int	number_size;
+	int	prefix;
 
-	size = len(n);
 	if (n == 0)
 		fmt->flags &= ~FMT_FLAG__HEX_PREFIX;
-	if (FMT__HEX_PREFIX(*fmt))
-		size += 2;
-	if (FMT__FORCE_SIGN(*fmt) || FMT__ALIGN_SIGN(*fmt))
-		++size;
-	fmt->width -= size;
-	if (fmt->width < 0)
-		fmt->width = 0;
-	size += fmt->width;
+	prefix = 2 * FMT__HEX_PREFIX(*fmt);
+	if (prefix)
+		fmt->width -= 2;
+	number_size = len(n);
+	fmt->precision = max(0, fmt->precision - number_size);
+	if (n < 0 || FMT__ALIGN_SIGN(*fmt) || FMT__FORCE_SIGN(*fmt))
+		++number_size;
+	if (FMT__ZERO_PADDING(*fmt) && !FMT__LEFT_JUSTIFY(*fmt))
+		fmt->precision = max(fmt->precision, max(0, fmt->width - number_size));
+	fmt->width = max(0, fmt->width - number_size - fmt->precision);
 	print(fmt, n, u);
-	return (size);
+	return (prefix + number_size + fmt->width + fmt->precision);
 }
