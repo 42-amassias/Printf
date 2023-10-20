@@ -1,33 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   align_sign.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amassias <amassias@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/19 07:48:43 by amassias          #+#    #+#             */
-/*   Updated: 2023/10/20 04:30:04 by amassias         ###   ########.fr       */
+/*   Created: 2023/10/20 04:36:05 by amassias          #+#    #+#             */
+/*   Updated: 2023/10/20 04:37:11 by amassias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 
-void	putnchar(char c, int count)
+int	fmt__align_sign(t_format *fmt)
 {
-	while (count--)
-		ft_putchar_fd(c, 1);
-}
-
-int	max(int a, int b)
-{
-	if (a > b)
-		return (a);
-	return (b);
-}
-
-int	min(int a, int b)
-{
-	if (a < b)
-		return (a);
-	return (b);
+	return ((fmt->flags & FMT_FLAG__ALIGN_SIGN) != 0);
 }

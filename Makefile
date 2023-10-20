@@ -16,6 +16,12 @@ FILES			=								\
 					number_printer				\
 					hex_printer					\
 					string_printer				\
+					flags/align_sign			\
+					flags/force_sign			\
+					flags/hex_prefix			\
+					flags/left_justify			\
+					flags/precision				\
+					flags/zero_padding			\
 					specifiers/char_printer		\
 					specifiers/string_printer	\
 					specifiers/pointer_printer	\

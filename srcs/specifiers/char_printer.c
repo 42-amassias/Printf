@@ -19,11 +19,11 @@ int	_char_printer(va_list *list, t_format *fmt)
 	if (fmt->width <= 0)
 		fmt->width = 1;
 	len = fmt->width--;
-	if (FMT__LEFT_JUSTIFY(*fmt))
+	if (fmt__left_justify(fmt))
 		ft_putchar_fd(va_arg(*list, int), 1);
 	while (fmt->width--)
 		ft_putchar_fd(' ', 1);
-	if (!FMT__LEFT_JUSTIFY(*fmt))
+	if (!fmt__left_justify(fmt))
 		ft_putchar_fd(va_arg(*list, int), 1);
 	return (len);
 }

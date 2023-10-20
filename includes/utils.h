@@ -6,7 +6,7 @@
 /*   By: amassias <amassias@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 04:16:23 by amassias          #+#    #+#             */
-/*   Updated: 2023/10/20 04:26:28 by amassias         ###   ########.fr       */
+/*   Updated: 2023/10/20 04:48:44 by amassias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,6 @@
 # define FMT_FLAG__ZERO_PADDING 0b010000
 # define FMT_FLAG__PRECISION 0b100000
 
-# define FMT__LEFT_JUSTIFY(fmt) (((fmt).flags & FMT_FLAG__LEFT_JUSTIFY) != 0)
-# define FMT__FORCE_SIGN(fmt) (((fmt).flags & FMT_FLAG__FORCE_SIGN) != 0)
-# define FMT__ALIGN_SIGN(fmt) (((fmt).flags & FMT_FLAG__ALIGN_SIGN) != 0)
-# define FMT__HEX_PREFIX(fmt) (((fmt).flags & FMT_FLAG__HEX_PREFIX) != 0)
-# define FMT__ZERO_PADDING(fmt) (((fmt).flags & FMT_FLAG__ZERO_PADDING) != 0)
-# define FMT__PRECISION(fmt) (((fmt).flags & FMT_FLAG__PRECISION) != 0)
-
 typedef struct s_format {
 	int		width;
 	int		precision;
@@ -41,6 +34,13 @@ typedef struct s_format {
 void	putnchar(char c, int count);
 int		max(int a, int b);
 int		min(int a, int b);
+
+int		fmt__left_justify(t_format *fmt);
+int		fmt__force_sign(t_format *fmt);
+int		fmt__align_sign(t_format *fmt);
+int		fmt__hex_prefix(t_format *fmt);
+int		fmt__zero_padding(t_format *fmt);
+int		fmt__precision(t_format *fmt);
 
 int		hex_printer(t_format *fmt, size_t n, int u);
 int		string_printer(t_format *fmt, char *str);

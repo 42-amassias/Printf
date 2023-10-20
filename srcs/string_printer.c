@@ -24,14 +24,14 @@ int	string_printer(t_format *fmt, char *str)
 	size_t	len;
 
 	slen = ft_strlen(str);
-	if (FMT__PRECISION(*fmt))
+	if (fmt__precision(fmt))
 		slen = min(fmt->precision, slen);
 	fmt->width = max(0, fmt->width - slen);
 	len = slen + fmt->width;
-	if (FMT__LEFT_JUSTIFY(*fmt))
+	if (fmt__left_justify(fmt))
 		putnstr(str, slen);
 	putnchar(' ', fmt->width);
-	if (!FMT__LEFT_JUSTIFY(*fmt))
+	if (!fmt__left_justify(fmt))
 		putnstr(str, slen);
 	return (len);
 }

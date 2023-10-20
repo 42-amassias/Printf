@@ -1,33 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   zero_padding.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amassias <amassias@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/19 07:48:43 by amassias          #+#    #+#             */
-/*   Updated: 2023/10/20 04:30:04 by amassias         ###   ########.fr       */
+/*   Created: 2023/10/20 04:34:53 by amassias          #+#    #+#             */
+/*   Updated: 2023/10/20 04:35:29 by amassias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 
-void	putnchar(char c, int count)
+int	fmt__zero_padding(t_format *fmt)
 {
-	while (count--)
-		ft_putchar_fd(c, 1);
-}
-
-int	max(int a, int b)
-{
-	if (a > b)
-		return (a);
-	return (b);
-}
-
-int	min(int a, int b)
-{
-	if (a < b)
-		return (a);
-	return (b);
+	return ((fmt->flags & FMT_FLAG__ZERO_PADDING) != 0);
 }
