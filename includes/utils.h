@@ -6,7 +6,7 @@
 /*   By: amassias <amassias@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 04:16:23 by amassias          #+#    #+#             */
-/*   Updated: 2023/10/20 04:16:50 by amassias         ###   ########.fr       */
+/*   Updated: 2023/10/20 04:26:28 by amassias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,13 @@ typedef struct s_format {
 	char	specifier;
 }	t_format;
 
-void	padd(char c, int count);
+void	putnchar(char c, int count);
+int		max(int a, int b);
+int		min(int a, int b);
 
-int		__hex_printer(t_format *fmt, size_t n, int u);
-int		__print_string(t_format *fmt, char *str);
-int		__number_printer(t_format *fmt, long n);
+int		hex_printer(t_format *fmt, size_t n, int u);
+int		string_printer(t_format *fmt, char *str);
+int		number_printer(t_format *fmt, long n);
 
 int		_char_printer(va_list *list, t_format *fmt);
 int		_string_printer(va_list *list, t_format *fmt);
@@ -52,8 +54,5 @@ int		_integer_printer(va_list *list, t_format *fmt);
 int		_unsigned_printer(va_list *list, t_format *fmt);
 int		_lo_hex_printer(va_list *list, t_format *fmt);
 int		_up_hex_printer(va_list *list, t_format *fmt);
-
-int		max(int a, int b);
-int		min(int a, int b);
 
 #endif

@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   _unsigned_printer.c                                :+:      :+:    :+:   */
+/*   _up_hex_printer.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amassias <amassias@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/19 08:33:38 by amassias          #+#    #+#             */
-/*   Updated: 2023/10/20 04:18:16 by amassias         ###   ########.fr       */
+/*   Created: 2023/10/19 06:55:10 by amassias          #+#    #+#             */
+/*   Updated: 2023/10/20 04:25:54 by amassias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 
-int	_unsigned_printer(va_list *list, t_format *fmt)
+int	_up_hex_printer(va_list *args, t_format *fmt)
 {
-	unsigned int	n;
+	unsigned int	x;
 
-	n = va_arg(*list, unsigned int);
+	x = va_arg(*args, unsigned int);
 	fmt->flags &= ~(FMT_FLAG__ALIGN_SIGN | FMT_FLAG__FORCE_SIGN);
-	return (__number_printer(fmt, (long) n));
+	return (hex_printer(fmt, (size_t) x, 1));
 }

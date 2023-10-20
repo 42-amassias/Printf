@@ -6,7 +6,7 @@
 /*   By: amassias <amassias@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 04:15:03 by amassias          #+#    #+#             */
-/*   Updated: 2023/10/20 04:18:48 by amassias         ###   ########.fr       */
+/*   Updated: 2023/10/20 04:28:55 by amassias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	putnstr(const char *str, size_t len)
 		ft_putchar_fd(*str++, 1);
 }
 
-int	__print_string(t_format *fmt, char *str)
+int	string_printer(t_format *fmt, char *str)
 {
 	size_t	slen;
 	size_t	len;
@@ -30,8 +30,7 @@ int	__print_string(t_format *fmt, char *str)
 	len = slen + fmt->width;
 	if (FMT__LEFT_JUSTIFY(*fmt))
 		putnstr(str, slen);
-	while (fmt->width-- > 0)
-		ft_putchar_fd(' ', 1);
+	putnchar(' ', fmt->width);
 	if (!FMT__LEFT_JUSTIFY(*fmt))
 		putnstr(str, slen);
 	return (len);

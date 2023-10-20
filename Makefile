@@ -10,20 +10,20 @@ SRC_DIR			=	srcs
 
 NAME			=	libftprintf.a
 
-FILES			=						\
-					ft_printf			\
-					utils				\
-					number_printer		\
-					hex_printer			\
-					string_printer		\
-					_char_printer		\
-					_string_printer		\
-					_pointer_printer	\
-					_decimal_printer	\
-					_integer_printer	\
-					_unsigned_printer	\
-					_lo_hex_printer		\
-					_up_hex_printer		\
+FILES			=								\
+					ft_printf					\
+					utils						\
+					number_printer				\
+					hex_printer					\
+					string_printer				\
+					specifiers/char_printer		\
+					specifiers/string_printer	\
+					specifiers/pointer_printer	\
+					specifiers/decimal_printer	\
+					specifiers/integer_printer	\
+					specifiers/unsigned_printer	\
+					specifiers/lo_hex_printer	\
+					specifiers/up_hex_printer	\
 
 SRCS			=	$(addsuffix .c,$(addprefix $(SRC_DIR)/,$(FILES)))
 OBJS			=	$(addsuffix .o,$(addprefix $(SRC_DIR)/,$(FILES)))

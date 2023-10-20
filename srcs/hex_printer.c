@@ -6,7 +6,7 @@
 /*   By: amassias <amassias@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 06:36:08 by amassias          #+#    #+#             */
-/*   Updated: 2023/10/20 04:18:36 by amassias         ###   ########.fr       */
+/*   Updated: 2023/10/20 04:28:57 by amassias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,20 +43,20 @@ static void	print(t_format *fmt, size_t n, int u)
 	if (u)
 		charset = U_CHARSET;
 	if (!FMT__ZERO_PADDING(*fmt) && !FMT__LEFT_JUSTIFY(*fmt))
-		padd(' ', fmt->width);
+		putnchar(' ', fmt->width);
 	if (!FMT__FORCE_SIGN(*fmt) && FMT__ALIGN_SIGN(*fmt))
 		ft_putchar_fd(' ', 1);
 	if (FMT__FORCE_SIGN(*fmt))
 		ft_putchar_fd('+', 1);
 	if (FMT__HEX_PREFIX(*fmt))
 		ft_putstr_fd(&charset[sizeof(L_CHARSET) - 3], 1);
-	padd('0', fmt->precision);
+	putnchar('0', fmt->precision);
 	print_hex(charset, n);
 	if (FMT__LEFT_JUSTIFY(*fmt))
-		padd(' ', fmt->width);
+		putnchar(' ', fmt->width);
 }
 
-int	__hex_printer(t_format *fmt, size_t n, int u)
+int	hex_printer(t_format *fmt, size_t n, int u)
 {
 	int	number_size;
 	int	prefix;

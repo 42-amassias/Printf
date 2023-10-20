@@ -6,7 +6,7 @@
 /*   By: amassias <amassias@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 04:13:08 by amassias          #+#    #+#             */
-/*   Updated: 2023/10/20 04:18:44 by amassias         ###   ########.fr       */
+/*   Updated: 2023/10/20 04:28:56 by amassias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	print_number(unsigned long n)
 static void	print(t_format *fmt, long n)
 {
 	if (!FMT__ZERO_PADDING(*fmt) && !FMT__LEFT_JUSTIFY(*fmt))
-		padd(' ', fmt->width);
+		putnchar(' ', fmt->width);
 	if (!FMT__FORCE_SIGN(*fmt) && FMT__ALIGN_SIGN(*fmt) && n >= 0)
 		ft_putchar_fd(' ', 1);
 	if (FMT__FORCE_SIGN(*fmt) && n >= 0)
@@ -47,13 +47,13 @@ static void	print(t_format *fmt, long n)
 		n = -n;
 		ft_putchar_fd('-', 1);
 	}
-	padd('0', fmt->precision);
+	putnchar('0', fmt->precision);
 	print_number((unsigned long) n);
 	if (FMT__LEFT_JUSTIFY(*fmt))
-		padd(' ', fmt->width);
+		putnchar(' ', fmt->width);
 }
 
-int	__number_printer(t_format *fmt, long n)
+int	number_printer(t_format *fmt, long n)
 {
 	int	number_size;
 

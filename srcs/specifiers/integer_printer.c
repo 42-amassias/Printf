@@ -1,26 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   _pointer_printer.c                                 :+:      :+:    :+:   */
+/*   _integer_printer.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amassias <amassias@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/19 05:25:18 by amassias          #+#    #+#             */
-/*   Updated: 2023/10/20 04:18:07 by amassias         ###   ########.fr       */
+/*   Created: 2023/10/19 08:33:38 by amassias          #+#    #+#             */
+/*   Updated: 2023/10/20 04:25:59 by amassias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 
-int	_pointer_printer(va_list *args, t_format *fmt)
+int	_integer_printer(va_list *list, t_format *fmt)
 {
-	void	*ptr;
-	size_t	n;
+	int	n;
 
-	ptr = va_arg(*args, void *);
-	n = *(long *)&ptr;
-	if (!n)
-		return (__print_string(fmt, "(nil)"));
-	fmt->flags |= FMT_FLAG__HEX_PREFIX;
-	return (__hex_printer(fmt, n, 0));
+	n = va_arg(*list, int);
+	return (number_printer(fmt, (long) n));
 }
