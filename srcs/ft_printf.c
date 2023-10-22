@@ -6,7 +6,7 @@
 /*   By: amassias <amassias@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 08:09:45 by amassias          #+#    #+#             */
-/*   Updated: 2023/10/20 04:18:27 by amassias         ###   ########.fr       */
+/*   Updated: 2023/10/23 00:31:58 by amassias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,6 @@
 #define FLAGS "-+ #0"
 
 typedef int		(*t_type_printer)(va_list *, t_format *);
-
-t_type_printer	g_printers[] = {
-	_char_printer,
-	_string_printer, _pointer_printer, _decimal_printer,
-	_integer_printer, _unsigned_printer, _lo_hex_printer, _up_hex_printer,
-};
 
 void	read_number(const char **str, int *value_ptr)
 {
@@ -63,7 +57,7 @@ int	read_format(t_format *fmt, const char **fmt_ptr)
 	return (0);
 }
 
-int	handle(const char **fmt_ptr, va_list *list)
+int	handle(const char **fmt_ptr, va_list *list, t_type_printer *printers)
 {
 	t_format		format;
 	t_type_printer	printer;
@@ -85,17 +79,31 @@ int	handle(const char **fmt_ptr, va_list *list)
 		ft_putchar_fd('%', 1);
 		return (1);
 	}
-	printer = g_printers[ft_strchr(SPECIFIERS, format.specifier) - SPECIFIERS];
+	printer = printers[ft_strchr(SPECIFIERS, format.specifier) - SPECIFIERS];
 	return (printer(list, &format));
+}
+
+void	init_printers(t_type_printer *printers)
+{
+	printers[0] = _char_printer;
+	printers[1] = _string_printer;
+	printers[2] = _pointer_printer;
+	printers[3] = _decimal_printer;
+	printers[4] = _integer_printer;
+	printers[5] = _unsigned_printer;
+	printers[6] = _lo_hex_printer;
+	printers[7] = _up_hex_printer;
 }
 
 int	ft_printf(const char *fmt, ...)
 {
-	va_list	args;
-	int		length;
+	va_list			args;
+	int				length;
+	t_type_printer	printers[8];
 
 	length = 0;
 	va_start(args, fmt);
+	init_printers(printers);
 	while (*fmt)
 	{
 		if (*fmt++ != '%')
@@ -104,7 +112,7 @@ int	ft_printf(const char *fmt, ...)
 			ft_putchar_fd(fmt[-1], 1);
 			continue ;
 		}
-		length += handle(&fmt, &args);
+		length += handle(&fmt, &args, printers);
 	}
 	va_end(args);
 	return (length);
