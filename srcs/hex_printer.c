@@ -6,7 +6,7 @@
 /*   By: amassias <amassias@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 06:36:08 by amassias          #+#    #+#             */
-/*   Updated: 2023/10/20 04:28:57 by amassias         ###   ########.fr       */
+/*   Updated: 2023/10/23 05:47:33 by amassias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,16 @@ static void	print(t_format *fmt, size_t n, int u)
 	charset = L_CHARSET;
 	if (u)
 		charset = U_CHARSET;
-	if (!fmt__zero_padding(fmt) && !fmt__left_justify(fmt))
+	if (!fmt__left_justify(fmt))
 		putnchar(' ', fmt->width);
-	if (!fmt__force_sign(fmt) && fmt__align_sign(fmt))
-		ft_putchar_fd(' ', 1);
-	if (fmt__force_sign(fmt))
-		ft_putchar_fd('+', 1);
-	if (fmt__hex_prefix(fmt))
+	if (fmt__hex_prefix(fmt)
+		&& (!fmt__precision(fmt) || fmt->precision >= 0 || n))
 		ft_putstr_fd(&charset[sizeof(L_CHARSET) - 3], 1);
 	putnchar('0', fmt->precision);
-	print_hex(charset, n);
+	if (!fmt__precision(fmt) || fmt->precision >= 0 || n)
+		print_hex(charset, n);
+	else if (fmt->width)
+		ft_putchar_fd(' ', 1);
 	if (fmt__left_justify(fmt))
 		putnchar(' ', fmt->width);
 }
@@ -61,18 +61,21 @@ int	hex_printer(t_format *fmt, size_t n, int u)
 	int	number_size;
 	int	prefix;
 
+	number_size = len(n);
+	fmt->precision -= number_size;
 	if (n == 0)
 		fmt->flags &= ~FMT_FLAG__HEX_PREFIX;
 	prefix = 2 * fmt__hex_prefix(fmt);
 	if (prefix)
 		fmt->width -= 2;
-	number_size = len(n);
-	fmt->precision = max(0, fmt->precision - number_size);
-	if (n < 0 || fmt__align_sign(fmt) || fmt__force_sign(fmt))
-		++number_size;
-	if (fmt__zero_padding(fmt) && !fmt__left_justify(fmt))
-		fmt->precision = max(fmt->precision, max(0, fmt->width - number_size));
+	if (fmt__zero_padding(fmt)
+		&& !fmt__left_justify(fmt)
+		&& !fmt__precision(fmt))
+		fmt->precision = fmt->width - number_size;
+	fmt->precision = max(0, fmt->precision);
 	fmt->width = max(0, fmt->width - number_size - fmt->precision);
 	print(fmt, n, u);
+	if (fmt__precision(fmt) && fmt->precision < 0 && n == 0 && fmt->width == 0)
+		--fmt->width;
 	return (prefix + number_size + fmt->width + fmt->precision);
 }
