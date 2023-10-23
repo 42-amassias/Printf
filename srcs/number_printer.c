@@ -6,7 +6,7 @@
 /*   By: amassias <amassias@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 04:13:08 by amassias          #+#    #+#             */
-/*   Updated: 2023/10/23 02:24:51 by amassias         ###   ########.fr       */
+/*   Updated: 2023/10/23 05:09:44 by amassias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void	print(t_format *fmt, long n)
 		ft_putchar_fd('-', 1);
 	}
 	putnchar('0', fmt->precision);
-	if (!fmt__precision(fmt) || fmt->precision || n)
+	if (!fmt__precision(fmt) || fmt->precision >= 0 || n)
 		print_number((unsigned long) n);
 	else if (fmt->width)
 		ft_putchar_fd(' ', 1);
@@ -73,7 +73,7 @@ int	number_printer(t_format *fmt, long n)
 	fmt->precision = max(0, fmt->precision);
 	fmt->width = max(0, fmt->width - number_size - fmt->precision);
 	print(fmt, n);
-	if (fmt__precision(fmt) && fmt->precision == 0 && n == 0 && fmt->width == 0)
+	if (fmt__precision(fmt) && fmt->precision < 0 && n == 0 && fmt->width == 0)
 		--fmt->width;
 	return (number_size + fmt->width + fmt->precision);
 }
