@@ -6,7 +6,7 @@
 /*   By: amassias <amassias@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 08:09:45 by amassias          #+#    #+#             */
-/*   Updated: 2023/10/23 00:31:58 by amassias         ###   ########.fr       */
+/*   Updated: 2023/10/24 05:06:32 by amassias         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 typedef int		(*t_type_printer)(va_list *, t_format *);
 
-void	read_number(const char **str, int *value_ptr)
+static void	read_number(const char **str, int *value_ptr)
 {
 	int	x;
 
@@ -30,7 +30,7 @@ void	read_number(const char **str, int *value_ptr)
 	*value_ptr = x;
 }
 
-int	read_format(t_format *fmt, const char **fmt_ptr)
+static int	read_format(t_format *fmt, const char **fmt_ptr)
 {
 	char	*x;
 
@@ -57,7 +57,8 @@ int	read_format(t_format *fmt, const char **fmt_ptr)
 	return (0);
 }
 
-int	handle(const char **fmt_ptr, va_list *list, t_type_printer *printers)
+static int	handle(const char **fmt_ptr, va_list *list,
+	t_type_printer *printers)
 {
 	t_format		format;
 	t_type_printer	printer;
@@ -83,7 +84,7 @@ int	handle(const char **fmt_ptr, va_list *list, t_type_printer *printers)
 	return (printer(list, &format));
 }
 
-void	init_printers(t_type_printer *printers)
+static void	init_printers(t_type_printer *printers)
 {
 	printers[0] = _char_printer;
 	printers[1] = _string_printer;
