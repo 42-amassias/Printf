@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   hex_printer.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amassias <amassias@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amassias <amassias@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 06:36:08 by amassias          #+#    #+#             */
 /*   Updated: 2023/10/24 05:03:59 by amassias         ###   ########.fr       */

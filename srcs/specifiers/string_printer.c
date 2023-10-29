@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   string_printer.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amassias <amassias@student.42.fr>          +#+  +:+       +#+        */
+/*   By: amassias <amassias@student.42lehavre.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 03:58:39 by amassias          #+#    #+#             */
 /*   Updated: 2023/10/23 01:40:35 by amassias         ###   ########.fr       */
