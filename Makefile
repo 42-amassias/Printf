@@ -3,45 +3,26 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: amassias <amassias@student.42lehavre.fr    +#+  +:+       +#+         #
+#    By: Antoine Massias <massias.antoine.pro@gm    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/29 17:26:27 by amassias          #+#    #+#              #
-#    Updated: 2023/10/29 17:26:27 by amassias         ###   ########.fr        #
+#    Updated: 2024/05/11 15:58:23 by Antoine Mas      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC				=	cc
-CFLAGS			=	-Wall -Werror -Wextra -g
+CFLAGS			=	-Wall -Werror -Wextra
 
 LIB_FT_PATH		=	libft
 LIB_FT_INC_DIR	=	$(LIB_FT_PATH)
 LIB_FT			=	$(LIB_FT_PATH)/libft.a
 
-INC_DIR			=	includes
-SRC_DIR			=	srcs
+INC_DIR			=	include
+SRC_DIR			=	src
 
 NAME			=	libftprintf.a
 
-FILES			=								\
-					ft_printf					\
-					utils						\
-					number_printer				\
-					hex_printer					\
-					string_printer				\
-					flags/align_sign			\
-					flags/force_sign			\
-					flags/hex_prefix			\
-					flags/left_justify			\
-					flags/precision				\
-					flags/zero_padding			\
-					specifiers/char_printer		\
-					specifiers/string_printer	\
-					specifiers/pointer_printer	\
-					specifiers/decimal_printer	\
-					specifiers/integer_printer	\
-					specifiers/unsigned_printer	\
-					specifiers/lo_hex_printer	\
-					specifiers/up_hex_printer	\
+include Files.mk
 
 SRCS			=	$(addsuffix .c,$(addprefix $(SRC_DIR)/,$(FILES)))
 OBJS			=	$(addsuffix .o,$(addprefix $(SRC_DIR)/,$(FILES)))
@@ -61,9 +42,8 @@ fclean: clean
 re:	fclean all
 
 $(NAME): $(LIB_FT) $(OBJS)
-	ar rcs tmp $(OBJS)
-	echo "CREATE $@\nADDLIB tmp\nADDLIB $(LIB_FT)\nSAVE\nEND" | ar -M
-	rm tmp
+	@cp $(LIB_FT) $@
+	@sh -c "ar rcs $@ $(OBJS) || rm $@"
 
 %.o: %.c
 	$(CC) -c $< -o $@ -I$(INC_DIR) -I$(LIB_FT_INC_DIR) $(CFLAGS)

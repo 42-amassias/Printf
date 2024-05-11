@@ -1,4 +1,4 @@
 *.o
-.vscode
-libftprintf.a
-a.out
+/.vscode
+/libftprintf.a
+/a.out
