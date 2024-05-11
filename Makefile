@@ -6,7 +6,7 @@
 #    By: Antoine Massias <massias.antoine.pro@gm    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/29 17:26:27 by amassias          #+#    #+#              #
-#    Updated: 2024/05/11 15:58:23 by Antoine Mas      ###   ########.fr        #
+#    Updated: 2024/05/11 17:20:12 by Antoine Mas      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,15 +17,16 @@ LIB_FT_PATH		=	libft
 LIB_FT_INC_DIR	=	$(LIB_FT_PATH)
 LIB_FT			=	$(LIB_FT_PATH)/libft.a
 
-INC_DIR			=	include
 SRC_DIR			=	src
+INC_DIR			=	include
+OBJ_DIR			=	build
 
 NAME			=	libftprintf.a
 
 include Files.mk
 
 SRCS			=	$(addsuffix .c,$(addprefix $(SRC_DIR)/,$(FILES)))
-OBJS			=	$(addsuffix .o,$(addprefix $(SRC_DIR)/,$(FILES)))
+OBJS			=	$(addsuffix .o,$(addprefix $(OBJ_DIR)/,$(FILES)))
 
 .PHONY: all bonus clean fclean re
 
@@ -45,7 +46,8 @@ $(NAME): $(LIB_FT) $(OBJS)
 	@cp $(LIB_FT) $@
 	@sh -c "ar rcs $@ $(OBJS) || rm $@"
 
-%.o: %.c
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(@D)
 	$(CC) -c $< -o $@ -I$(INC_DIR) -I$(LIB_FT_INC_DIR) $(CFLAGS)
 
 $(LIB_FT):
